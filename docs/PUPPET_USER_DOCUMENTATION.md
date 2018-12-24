@@ -52,6 +52,29 @@ In this file you'll need to add:
 
 Once you've done this, you should be ready to install Puppet modules via `puppet install module`!
 
+### Using Librarian-Puppet
+
+You can use `librarian-puppet` to install modules through Nexus. Librarian-puppet allows users to manage 
+the installation of puppet modules using a `Puppetfile`. For more information on how librarian-puppet 
+works, you can follow the following link: [librarian-puppet info](https://librarian-puppet.com/). 
+
+To get `librarian-puppet` set up to download modules via Nexus, you'll need to update your `Puppetfile`. 
+By default, at the top of the `Puppetfle` you will find:
+
+`forge "https://forgeapi.puppetlabs.com"` 
+
+This directs `librarian-puppet` to install modules from the puppet forge api, however; we want to proxy installations 
+through Nexus. We therefore need to remove this line and add the following:
+
+`forge "https://nexus-url/repository/puppet-proxy-name"` 
+
+Before running the `librarian-puppet` command, you will have to remove the `Puppetfile.lock` in order to remove cached 
+repositories. When running the `librarian-puppet` command please use the following:
+
+`librarian-puppet install --verbose --no-use-v1-api`
+
+You should then see installs of puppet modules being proxied through your Nexus puppet repo.
+ 
 ### Browsing Puppet Repository Packages
 
 You can browse Puppet repositories in the user interface inspecting the components and assets and their details, as
